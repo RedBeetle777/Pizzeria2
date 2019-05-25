@@ -7,6 +7,7 @@
 		header('Location: index.php');
 		exit();
 	}
+	
 
 	require_once "connect.php";
 
@@ -49,7 +50,20 @@
 				$_SESSION['stanowisko'] = $wiersz['stanowisko'];
 				unset($_SESSION['blad']);
 				$rezultat->free_result();
-				header('Location: pizzeria.php');
+				//header('Location: Kelner.php');
+				
+				if($_SESSION['stanowisko'] == 'Kucharz'){
+					header('Location: kucharz.php');
+				}
+				if($_SESSION['stanowisko'] == 'Kelner'){
+					header('Location: kelner.php');
+				}
+				if($_SESSION['stanowisko'] == 'Manager'){
+					header('Location: manager.php');
+				}
+				if($_SESSION['stanowisko'] == 'Inne'){
+					header('Location: inne.php');
+				}
 				
 			} else {
 				
@@ -64,4 +78,3 @@
 	}
 	
 ?>
-
