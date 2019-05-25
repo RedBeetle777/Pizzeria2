@@ -22,7 +22,7 @@
 <?php
 
 	echo "<p>Witaj ".$_SESSION['imie'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
-	
+	echo "Jesteś:".$_SESSION['stanowisko'];
 	
 ?>
 
