@@ -1,7 +1,7 @@
 <?php
 
 	session_start();
-	
+	$_SESSION['przekierowanie'] = False;
 	if ((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
 	{
 		header('Location: pizzeria.php');
