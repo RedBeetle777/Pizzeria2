@@ -1,35 +1,47 @@
 <?php
-    session_start();
-    $_SESSION['typ']="2";
-    $_SESSION['logged_in']=false;
-    $_SESSION['message']=' ';
-    $mysqli=new mysqli('localhost', 'root', '','mydb' );
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        
-        $login=$mysqli->real_escape_string($_POST['login']);
-        $haslo=md5($_POST['haslo']);
-        
-        $sql = "SELECT * FROM kucharz;
-        $result = $mysqli->query( $sql );
-        
-        $user = $result->fetch_assoc();
-        /*
-         if ( $haslo== $user['haslo']) {
-         $_SESSION['user_id'] = $user['idUzytkownik'];
-         $_SESSION['logged_in']=true;
-         if($user['typ']=="2")
-         {
-         $_SESSION['typ']="2";
-         header("location: kucharz.php");
-         }
-         else
-         {
-         header("location: myProfileInfo.php");
-         }
-         }
-         else  $_SESSION['message'] = "Błędne hasło!";
-         */
-    }
-    
-    ?>
 
+	session_start();
+	
+	if (!isset($_SESSION['zalogowany']))
+	{
+		header('Location: index.php');
+		exit();
+	}
+	if ($_SESSION['stanowisko'] != 'Kucharz'){
+		header('Location: przekierowanie.php');
+		exit();
+		
+	}
+?>
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Pizzeria</title>
+</head>
+
+<body>
+	
+<?php
+
+	echo "<p>Witaj ".$_SESSION['imie'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
+	echo "Jesteś:".$_SESSION['stanowisko'];
+	/*
+	if($_SESSION['stanowisko'] == 'Manager'){
+		echo "Manager";
+	}
+	if($_SESSION['stanowisko'] == 'Kelner'){
+		echo "Kelner";
+	}
+	if($_SESSION['stanowisko'] == 'Kucharz'){
+		echo "Kuc";
+	}
+	if($_SESSION['stanowisko'] == 'Inne'){
+		echo "Inne";
+	}
+	*/
+?>
+
+</body>
+</html>
