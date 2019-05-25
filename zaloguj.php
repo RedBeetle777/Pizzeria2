@@ -33,9 +33,10 @@
 			if($ilu_userow>0)
 			{
 				$_SESSION['zalogowany'] = true;
-                /*
+                
 				
 				$wiersz = $rezultat->fetch_assoc();
+				/*
 				$_SESSION['id'] = $wiersz['id'];
 				$_SESSION['user'] = $wiersz['user'];
 				$_SESSION['drewno'] = $wiersz['drewno'];
@@ -44,6 +45,8 @@
 				$_SESSION['email'] = $wiersz['email'];
 				$_SESSION['dnipremium'] = $wiersz['dnipremium'];
 				*/
+				$_SESSION['imie'] = $wiersz['imie'];
+				$_SESSION['stanowisko'] = $wiersz['stanowisko'];
 				unset($_SESSION['blad']);
 				$rezultat->free_result();
 				header('Location: pizzeria.php');
@@ -61,3 +64,4 @@
 	}
 	
 ?>
+
