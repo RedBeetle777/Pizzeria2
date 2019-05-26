@@ -27,21 +27,16 @@
 
 	echo "<p>Witaj ".$_SESSION['imie'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
 	echo "Jesteś:".$_SESSION['stanowisko'];
-	/*
-	if($_SESSION['stanowisko'] == 'Manager'){
-		echo "Manager";
-	}
-	if($_SESSION['stanowisko'] == 'Kelner'){
-		echo "Kelner";
-	}
-	if($_SESSION['stanowisko'] == 'Kucharz'){
-		echo "Kuc";
-	}
-	if($_SESSION['stanowisko'] == 'Inne'){
-		echo "Inne";
-	}
-	*/
+
 ?>
+<form action="dodajzamowienie.php">
+    <button type="submit">
+        Dodaj zamowienie!
+    </button>
+
+</form>
+
+<input type="button" value="Kliknij tutaj" onclick="window.alert('')">
 
 </body>
 </html>
