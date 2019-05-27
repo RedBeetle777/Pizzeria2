@@ -9,3 +9,9 @@ INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) V
 INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('1', 'Margeritha', 'srednia', '14', 'sos, ser, oregano')
 
 INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('2', 'Margeritha', 'duza', '23', 'sos, ser, oregano')
+
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('3', 'Wegetarianska', 'mala', '14', 'sos, ser, cebula, pieczarki, kukurydza, pom')
+
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('4', 'Wegetarianska', 'srednia', '19', 'sos, ser, cebula, pieczarki, kukurydza, pom')
+
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('5', 'Wegetarianska', 'duza', '31', 'sos, ser, cebula, pieczarki, kukurydza, pom')
