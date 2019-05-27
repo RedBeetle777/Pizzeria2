@@ -1,0 +1,11 @@
+UPDATE `pizze` SET `idPizza` = '6', `koszt` = '16', `skladniki` = 'sos, ser, kiełbasa pepperoni, bazylia' WHERE `pizze`.`idPizza` = 500;
+
+UPDATE `pizze` SET `idPizza` = '7', `rozmiar` = 'srednia', `koszt` = '22' WHERE `pizze`.`idPizza` = 501;
+
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('8', 'Pepperoni', 'duza', '40', 'sos, ser, kiełbasa pepperoni, bazylia');
+
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('0', 'Margeritha', 'mala', '10', 'sos, ser, oregano')
+
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('0', 'Margeritha', 'mala', '10', 'sos, ser, oregano')
+
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('0', 'Margeritha', 'mala', '10', 'sos, ser, oregano')
