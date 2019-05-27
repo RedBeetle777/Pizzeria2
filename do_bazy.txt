@@ -6,6 +6,6 @@ INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) V
 
 INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('0', 'Margeritha', 'mala', '10', 'sos, ser, oregano')
 
-INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('0', 'Margeritha', 'mala', '10', 'sos, ser, oregano')
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('1', 'Margeritha', 'srednia', '14', 'sos, ser, oregano')
 
-INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('0', 'Margeritha', 'mala', '10', 'sos, ser, oregano')
+INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES ('2', 'Margeritha', 'duza', '23', 'sos, ser, oregano')
