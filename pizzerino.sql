@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.6.6deb4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Czas generowania: 15 Kwi 2019, 01:30
--- Wersja serwera: 10.1.38-MariaDB
--- Wersja PHP: 7.3.3
+-- Host: localhost:3306
+-- Czas generowania: 28 Maj 2019, 00:18
+-- Wersja serwera: 10.1.38-MariaDB-0+deb9u1
+-- Wersja PHP: 7.0.33-0+deb9u3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -22,23 +20,16 @@ SET time_zone = "+00:00";
 -- Baza danych: `mydb`
 --
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
-
-CREATE USER `chef`@`localhost`;
--- --------------------------------------------------------
-
 DELIMITER $$
 --
 -- Procedury
 --
- 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `menu` (IN `id` INT)  READS SQL DATA
 SELECT * from pizze, napoje$$
- 
- DELIMITER ;
 
+DELIMITER ;
 
+-- --------------------------------------------------------
 
 --
 -- Struktura tabeli dla tabeli `kalkulator`
@@ -182,8 +173,15 @@ CREATE TABLE `pizze` (
 --
 
 INSERT INTO `pizze` (`idPizza`, `NazwaPizzy`, `rozmiar`, `koszt`, `skladniki`) VALUES
-(500, 'Pepperoni', 'mala', 19, 'sos pomidorowy, kiełbasa pepperoni, bazylia'),
-(501, 'Pepperoni', 'duza', 23, 'sos pomidorowy, kiełbasa pepperoni, bazylia');
+(0, 'Margeritha', 'mala', 10, 'sos, ser, oregano'),
+(1, 'Margeritha', 'srednia', 14, 'sos, ser, oregano'),
+(2, 'Margeritha', 'duza', 23, 'sos, ser, oregano'),
+(3, 'Wegetarianska', 'mala', 14, 'sos, ser, cebula, pieczarki, kukurydza, pom'),
+(4, 'Wegetarianska', 'srednia', 19, 'sos, ser, cebula, pieczarki, kukurydza, pom'),
+(5, 'Wegetarianska', 'duza', 31, 'sos, ser, cebula, pieczarki, kukurydza, pom'),
+(6, 'Pepperoni', 'mala', 16, 'sos, ser, kiełbasa pepperoni, bazylia'),
+(7, 'Pepperoni', 'srednia', 22, 'sos pomidorowy, kiełbasa pepperoni, bazylia'),
+(8, 'Pepperoni', 'duza', 40, 'sos, ser, kiełbasa pepperoni, bazylia');
 
 -- --------------------------------------------------------
 
@@ -203,11 +201,13 @@ CREATE TABLE `skladniki` (
 --
 
 INSERT INTO `skladniki` (`idSkladniki`, `nazwa`, `Vege`, `Ostrosc`) VALUES
-(600, 'sos pomidorowy', 1, '0'),
-(601, 'kiełbasa pepperoni', 0, '1'),
-(602, 'bazylia', 1, '0'),
-(603, 'papryka jalapenio', 0, '2'),
-(604, 'sos chilli', 1, '2');
+(0, 'ser', 1, '0'),
+(1, 'sos pomidorowy', 1, '0'),
+(2, 'kiełbasa pepperoni', 0, '1'),
+(3, 'bazylia', 1, '0'),
+(4, 'papryka jalapenio', 1, '2'),
+(5, 'sos chilli', 1, '2'),
+(6, 'oregano', 1, '0');
 
 -- --------------------------------------------------------
 
@@ -222,6 +222,7 @@ CREATE TABLE `uzytkownik` (
   `nazwisko` varchar(45) NOT NULL,
   `login` varchar(45) NOT NULL,
   `nr_personelu` int(11) NOT NULL,
+  `stanowisko` enum('Manager','Kelner','Kucharz','Inne') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'Inne',
   `typ` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -229,11 +230,11 @@ CREATE TABLE `uzytkownik` (
 -- Zrzut danych tabeli `uzytkownik`
 --
 
-INSERT INTO `uzytkownik` (`idUzytkownik`, `haslo`, `imie`, `nazwisko`, `login`, `nr_personelu`, `typ`) VALUES
-(1, '1234', 'Jan', 'Kowalski', 'janek', 27, 1),
-(2, '0000', 'Zbigniew', 'Mazur', 'mazurek', 5, 3),
-(3, '4321', 'Krzysztof', 'Pokraśko', 'pokrak', 67, 3),
-(4, '1234', 'Adam', 'Małysz', 'leć', 45, 2);
+INSERT INTO `uzytkownik` (`idUzytkownik`, `haslo`, `imie`, `nazwisko`, `login`, `nr_personelu`, `stanowisko`, `typ`) VALUES
+(1, '1234', 'Jan', 'Kowalski', 'janek', 27, 'Manager', '1'),
+(2, '0000', 'Zbigniew', 'Mazur', 'mazurek', 5, 'Kucharz', '3'),
+(3, '4321', 'Krzysztof', 'Pokraśko', 'pokrak', 67, 'Kucharz', '3'),
+(4, '1234', 'Adam', 'Małysz', 'leć', 45, 'Kelner', '2');
 
 -- --------------------------------------------------------
 
@@ -258,89 +259,71 @@ CREATE TABLE `zamowienie` (
 INSERT INTO `zamowienie` (`idZamowienie`, `CzasZamowienia`, `idKelnera`, `idKucharza`, `KwotaZamowienia`, `SposobZaplaty`, `PotwierdzenieZaplaty`) VALUES
 (1, '30', 2, 1, NULL, 'karta', 1);
 
-
-
-INSERT INTO Kalkulator (a)
-SELECT koszt FROM Pizze WHERE idPizza=501;
-
-INSERT INTO Kalkulator (b)
-SELECT ilosc FROM ListaPizz WHERE idZamowienie=1;
-
-INSERT INTO Kalkulator (c)
-SELECT Cena FROM Napoje WHERE idNapoj=400;
-
-INSERT INTO Kalkulator (d)
-SELECT ilosc FROM ListaNapojow WHERE idZamowienie=1;
-
--- INSERT INTO Kalkulator (total1)
--- SELECT a FROM Kalkulator,
--- SELECT b FROM Kalkulator;
-
--- SELECT FROM Kalkulator SUM
+--
 -- Indeksy dla zrzutów tabel
 --
 
 --
--- Indeksy dla tabeli `kelner`
+-- Indexes for table `kelner`
 --
 ALTER TABLE `kelner`
   ADD PRIMARY KEY (`idKelner`),
   ADD KEY `idUzytkownika` (`idUzytkownika`);
 
 --
--- Indeksy dla tabeli `kucharz`
+-- Indexes for table `kucharz`
 --
 ALTER TABLE `kucharz`
   ADD PRIMARY KEY (`idKucharz`),
   ADD KEY `idUzytkownika` (`idUzytkownika`);
 
 --
--- Indeksy dla tabeli `listanapojow`
+-- Indexes for table `listanapojow`
 --
 ALTER TABLE `listanapojow`
   ADD KEY `idZamowienie` (`idZamowienie`),
   ADD KEY `idNapoju` (`idNapoju`);
 
 --
--- Indeksy dla tabeli `listapizz`
+-- Indexes for table `listapizz`
 --
 ALTER TABLE `listapizz`
   ADD KEY `idZamowienie` (`idZamowienie`),
   ADD KEY `idPizzy` (`idPizzy`);
 
 --
--- Indeksy dla tabeli `listaskladnikow`
+-- Indexes for table `listaskladnikow`
 --
 ALTER TABLE `listaskladnikow`
   ADD KEY `idPizza` (`idPizza`),
   ADD KEY `idSkladnik` (`idSkladnik`);
 
 --
--- Indeksy dla tabeli `napoje`
+-- Indexes for table `napoje`
 --
 ALTER TABLE `napoje`
   ADD PRIMARY KEY (`idNapoj`);
 
 --
--- Indeksy dla tabeli `pizze`
+-- Indexes for table `pizze`
 --
 ALTER TABLE `pizze`
   ADD PRIMARY KEY (`idPizza`);
 
 --
--- Indeksy dla tabeli `skladniki`
+-- Indexes for table `skladniki`
 --
 ALTER TABLE `skladniki`
   ADD PRIMARY KEY (`idSkladniki`);
 
 --
--- Indeksy dla tabeli `uzytkownik`
+-- Indexes for table `uzytkownik`
 --
 ALTER TABLE `uzytkownik`
   ADD PRIMARY KEY (`idUzytkownik`);
 
 --
--- Indeksy dla tabeli `zamowienie`
+-- Indexes for table `zamowienie`
 --
 ALTER TABLE `zamowienie`
   ADD PRIMARY KEY (`idZamowienie`),
@@ -352,17 +335,20 @@ ALTER TABLE `zamowienie`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `skladniki`
+--
+ALTER TABLE `skladniki`
+  MODIFY `idSkladniki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=606;
+--
 -- AUTO_INCREMENT dla tabeli `uzytkownik`
 --
 ALTER TABLE `uzytkownik`
   MODIFY `idUzytkownik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT dla tabeli `zamowienie`
 --
 ALTER TABLE `zamowienie`
   MODIFY `idZamowienie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- Ograniczenia dla zrzutów tabel
 --
@@ -385,30 +371,6 @@ ALTER TABLE `kucharz`
 ALTER TABLE `listanapojow`
   ADD CONSTRAINT `listanapojow_ibfk_1` FOREIGN KEY (`idZamowienie`) REFERENCES `zamowienie` (`idZamowienie`),
   ADD CONSTRAINT `listanapojow_ibfk_2` FOREIGN KEY (`idNapoju`) REFERENCES `napoje` (`idNapoj`);
-
---
--- Ograniczenia dla tabeli `listapizz`
---
-ALTER TABLE `listapizz`
-  ADD CONSTRAINT `listapizz_ibfk_1` FOREIGN KEY (`idZamowienie`) REFERENCES `zamowienie` (`idZamowienie`),
-  ADD CONSTRAINT `listapizz_ibfk_2` FOREIGN KEY (`idPizzy`) REFERENCES `pizze` (`idPizza`);
-
---
--- Ograniczenia dla tabeli `listaskladnikow`
---
-ALTER TABLE `listaskladnikow`
-  ADD CONSTRAINT `listaskladnikow_ibfk_1` FOREIGN KEY (`idSkladnik`) REFERENCES `skladniki` (`idSkladniki`),
-  ADD CONSTRAINT `listaskladnikow_ibfk_2` FOREIGN KEY (`idPizza`) REFERENCES `pizze` (`idPizza`);
-
---
--- Ograniczenia dla tabeli `zamowienie`
---
-ALTER TABLE `zamowienie`
-  ADD CONSTRAINT `zamowienie_ibfk_1` FOREIGN KEY (`idKucharza`) REFERENCES `kucharz` (`idKucharz`),
-  ADD CONSTRAINT `zamowienie_ibfk_2` FOREIGN KEY (`idKelnera`) REFERENCES `kelner` (`idKelner`);
-COMMIT;
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
