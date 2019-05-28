@@ -15,6 +15,21 @@
 
 ?>
 <?php
+
+if(isset($_POST['rodzaj'])){
+
+    $rodzaj = $_POST('rodzaj');
+    $rozmiar = $_POST('rozmiar');
+    echo "Wybrana pizza o numerze:".$rodzaj." o rozmiarze:".$rozmiar;
+}
+else
+{
+    echo "nie przekazano nic";
+
+}
+
+?>
+<?php
     require_once "connect.php";
     $polaczenie = @new mysqli($host, $db_user, $db_password, $db_name);
 
@@ -49,7 +64,7 @@
 
 Wybierz Pizze:
 <?php
-echo "<form action='dodajzamowienie.php'><select>";
+echo "<form action='dodajzamowienie.php'><select name= 'rodzaj'>";
 while($rzad = $listaPizz->fetch_assoc()){
         if($rzad['rozmiar'] == "mala") {
             echo "<option value='" . $rzad["idPizza"] .
@@ -58,12 +73,31 @@ while($rzad = $listaPizz->fetch_assoc()){
         }
     }
     echo "</select>";
+echo "<br/>";
 echo "<input type='radio' name='rozmiar' value='0' checked> mala";
 echo "<input type='radio' name='rozmiar' value='1' > srednia";
 echo "<input type='radio' name='rozmiar' value='2' > duza";
-
+echo "<br/>";
+echo "<input type='submit' value='Dodaj Pizze!'>";
     echo "</form>";
     ?>
+
+<br/><br/>
+
+
+
+<!--<form>-->
+<!--    <select>-->
+<!--        while($rzad = $listaPizz->fetch_assoc()){-->
+<!--        if($rzad['rozmiar'] == "mal") {-->
+<!--        <option value="aaa">aaa</option>-->
+<!---->
+<!--        }-->
+<!--        }-->
+<!---->
+<!--    </select>-->
+<!--</form>-->
+
 
 <form action="kelner.php">
     <button type="submit">
