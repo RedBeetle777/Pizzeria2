@@ -13,21 +13,28 @@
 
     }
 
+//    $rodzaj = $_GET['rodzaj'];
+//    $rozmiar = $_GET['rozmiar'];
 ?>
 <?php
-
-if(isset($_POST['rodzaj'])){
-
-    $rodzaj = $_POST('rodzaj');
-    $rozmiar = $_POST('rozmiar');
-    echo "Wybrana pizza o numerze:".$rodzaj." o rozmiarze:".$rozmiar;
-}
-else
-{
-    echo "nie przekazano nic";
+$rozmiarlistyN = count($_SESSION['listazamowieniaN']);
+$rozmiarlistyP = count($_SESSION['listazamowieniaP']);
+if(isset($_GET['rodzaj'])){
+    $rodzaj = $_GET['rodzaj'];
+    $rozmiar = $_GET['rozmiar'];
+    array_push($_SESSION['listazamowieniaP'], $rodzaj + $rozmiar);
+    header('Location: dodajzamowienie.php');
+    exit();
 
 }
+if(isset($_GET['napoj'])){
+    $napoj = $_GET['napoj'];
+    array_push($_SESSION['listazamowieniaN'], $napoj);
+    //print_r($_SESSION['listazamowieniaN']);
+    header('Location: dodajzamowienie.php');
+    exit();
 
+}
 ?>
 <?php
     require_once "connect.php";
@@ -38,31 +45,20 @@ else
         echo "Error: ".$polaczenie->connect_errno;
     }
     else {
-//
-//        if($listaPizz = @$polaczenie->query(
-//            sprintf("SELECT * FROM pizze"))) {
-//            if($listaPizz->num_rows > 0){
-//
-//                while($rzad = $listaPizz->fetch_assoc()){
-//
-//                    echo "Numer pizzy: ".$rzad["idPizza"].
-//                        " Nazwa pizzy:".$rzad["NazwaPizzy"].
-//                        " rozmiar: ".$rzad["rozmiar"].
-//                        "<br>";
-//                }
-//            }
-//            else{
-//                echo "0 results";
-//            }
-//        }
     }
 
     $listaPizz = @$polaczenie->query(
             sprintf("SELECT * FROM pizze"));
 
     ?>
+<form action="kelner.php">
+    <button type="submit">
+        Wróć i porzuć zmiany!
+    </button>
 
+</form>
 Wybierz Pizze:
+<!--tutaj sektor dodawania pizzy do zamowienia-->
 <?php
 echo "<form action='dodajzamowienie.php'><select name= 'rodzaj'>";
 while($rzad = $listaPizz->fetch_assoc()){
@@ -79,30 +75,60 @@ echo "<input type='radio' name='rozmiar' value='1' > srednia";
 echo "<input type='radio' name='rozmiar' value='2' > duza";
 echo "<br/>";
 echo "<input type='submit' value='Dodaj Pizze!'>";
-    echo "</form>";
-    ?>
+echo "</form>";
+?>
 
-<br/><br/>
+<!--tutaj dodawane sa napoje-->
 
+<?php
+$listaNapoi = @$polaczenie->query(
+    sprintf("SELECT * FROM napoje"));
+echo "<form action='dodajzamowienie.php'><select name= 'napoj'>";
+while($rzad = $listaNapoi->fetch_assoc()){
+    echo "<option value='" . $rzad["idNapoj"] .
+        "'> " . $rzad["NazwaNapoju"] ." ".$rzad["Pojemnosc"]."L"."</option>";
+}
+echo "</select>";
+echo "<br/>";
+echo "<input type='submit' value='Dodaj Napoj!'>";
+echo "</form>";
+?>
 
+<br/>
+<?php
 
-<!--<form>-->
-<!--    <select>-->
-<!--        while($rzad = $listaPizz->fetch_assoc()){-->
-<!--        if($rzad['rozmiar'] == "mal") {-->
-<!--        <option value="aaa">aaa</option>-->
-<!---->
-<!--        }-->
-<!--        }-->
-<!---->
-<!--    </select>-->
-<!--</form>-->
+echo "Aktualne zamówienie[Pizze]: dlugosc( ". $rozmiarlistyP.") ";
+print_r($_SESSION['listazamowieniaP']);
+echo "<br/>";
 
+for($i = 0; $i < $rozmiarlistyP; $i++) {
+    $rezultat = @$polaczenie->query(
+        sprintf("SELECT * FROM pizze WHERE idPizza='%s'",
+            mysqli_real_escape_string($polaczenie,$_SESSION['listazamowieniaP'][$i])));
+    $nazwapizzy = $rezultat->fetch_assoc();
+    echo "ID PIZZY :".$_SESSION['listazamowieniaP'][$i].
+        " || NAZWA PIZZY: ".$nazwapizzy['NazwaPizzy'].
+        " || ROZMIAR: ".$nazwapizzy['rozmiar'];
+    echo "<br/>";
+}
+echo "<br/>";
+echo "Aktualne zamówienie[Napoje]: dlugosc( ". $rozmiarlistyN.")";
+print_r($_SESSION['listazamowieniaN']);
+echo "<br/>";
 
-<form action="kelner.php">
-    <button type="submit">
-        Wróć i porzuć zmiany!
-    </button>
+for($i = 0; $i < $rozmiarlistyN; $i++) {
+    echo$_SESSION['listazamowieniaN'][$i];
+    echo "<br/>";
+    $rezultat = @$polaczenie->query(
+        sprintf("SELECT * FROM napoje WHERE idNapoj='%s'",
+            mysqli_real_escape_string($polaczenie,$_SESSION['listazamowieniaN'][$i])));
+    $nazwanapoju = $rezultat->fetch_assoc();
+    echo "ID NAPOJU :".$_SESSION['listazamowieniaN'][$i].
+        " || NAZWA NAPOJU: ".$nazwanapoju['NazwaNapoju'].
+        " || POJEMNOSC: ".$nazwanapoju['Pojemnosc'];
 
-</form>
-tutaj dodajemu zamoiwienie
+    echo "<br/>";
+}
+
+?>
+<br/>

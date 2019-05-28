@@ -12,6 +12,16 @@
 		exit();
 		
 	}
+//	Tworzenie(badz reset) listy zamowienia pizz
+	if(isset($_SESSION['listazamowieniaP']))
+	    unset($_SESSION['listazamowieniaP']);
+	if(!isset($_SESSION['listazamowieniaP']))
+	    $_SESSION['listazamowieniaP'] = array();
+//	Tworzenie(badz reset) listy zamowienia Napoi
+    if(isset($_SESSION['listazamowieniaN']))
+        unset($_SESSION['listazamowieniaN']);
+    if(!isset($_SESSION['listazamowieniaN']))
+        $_SESSION['listazamowieniaN'] = array();
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -30,6 +40,7 @@
 
 ?>
 <form action="dodajzamowienie.php">
+
     <button type="submit">
         Dodaj zamowienie!
     </button>
