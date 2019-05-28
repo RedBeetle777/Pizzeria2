@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Czas generowania: 28 Maj 2019, 00:18
+-- Czas generowania: 28 Maj 2019, 20:04
 -- Wersja serwera: 10.1.38-MariaDB-0+deb9u1
 -- Wersja PHP: 7.0.33-0+deb9u3
 
@@ -89,17 +89,18 @@ INSERT INTO `kucharz` (`idKucharz`, `idUzytkownika`) VALUES
 --
 
 CREATE TABLE `listanapojow` (
+  `id` int(11) NOT NULL,
   `idZamowienie` int(11) NOT NULL,
-  `idNapoju` int(11) DEFAULT NULL,
-  `Ilosc` int(11) DEFAULT NULL
+  `idNapoj` int(11) NOT NULL,
+  `ilosc` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Zrzut danych tabeli `listanapojow`
 --
 
-INSERT INTO `listanapojow` (`idZamowienie`, `idNapoju`, `Ilosc`) VALUES
-(1, 400, 1);
+INSERT INTO `listanapojow` (`id`, `idZamowienie`, `idNapoj`, `ilosc`) VALUES
+(1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -108,6 +109,7 @@ INSERT INTO `listanapojow` (`idZamowienie`, `idNapoju`, `Ilosc`) VALUES
 --
 
 CREATE TABLE `listapizz` (
+  `id` int(11) NOT NULL,
   `idZamowienie` int(11) NOT NULL,
   `idPizzy` int(11) DEFAULT NULL,
   `Ilosc` int(11) DEFAULT NULL
@@ -117,8 +119,8 @@ CREATE TABLE `listapizz` (
 -- Zrzut danych tabeli `listapizz`
 --
 
-INSERT INTO `listapizz` (`idZamowienie`, `idPizzy`, `Ilosc`) VALUES
-(1, 501, 2);
+INSERT INTO `listapizz` (`id`, `idZamowienie`, `idPizzy`, `Ilosc`) VALUES
+(1, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -127,10 +129,68 @@ INSERT INTO `listapizz` (`idZamowienie`, `idPizzy`, `Ilosc`) VALUES
 --
 
 CREATE TABLE `listaskladnikow` (
+  `id` int(11) NOT NULL,
   `idPizza` int(11) NOT NULL,
   `idSkladnik` int(11) DEFAULT NULL,
   `IloscJednostkowa` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `listaskladnikow`
+--
+
+INSERT INTO `listaskladnikow` (`id`, `idPizza`, `idSkladnik`, `IloscJednostkowa`) VALUES
+(29, 6, 600, 1),
+(30, 6, 601, 1),
+(31, 6, 602, 1),
+(32, 6, 603, 1),
+(33, 7, 600, 1),
+(34, 7, 601, 1),
+(35, 7, 602, 1),
+(36, 7, 603, 1),
+(37, 8, 600, 1),
+(38, 8, 601, 1),
+(39, 8, 602, 1),
+(40, 8, 603, 1),
+(41, 0, 600, 1),
+(42, 0, 601, 1),
+(43, 0, 605, 1),
+(44, 1, 600, 1),
+(45, 1, 601, 1),
+(46, 1, 605, 1),
+(47, 2, 600, 1),
+(48, 2, 601, 1),
+(49, 2, 605, 1),
+(50, 3, 600, 1),
+(51, 3, 601, 1),
+(52, 3, 606, 1),
+(53, 3, 607, 1),
+(54, 3, 608, 1),
+(55, 3, 609, 1),
+(56, 4, 600, 1),
+(57, 4, 601, 1),
+(58, 4, 606, 1),
+(59, 4, 607, 1),
+(60, 4, 608, 1),
+(61, 4, 609, 1),
+(62, 5, 600, 1),
+(63, 5, 601, 1),
+(64, 5, 606, 1),
+(65, 5, 607, 1),
+(66, 5, 608, 1),
+(67, 5, 609, 1),
+(68, 6, 600, 1),
+(69, 6, 601, 1),
+(70, 6, 602, 1),
+(71, 6, 603, 1),
+(72, 7, 600, 1),
+(73, 7, 601, 1),
+(74, 7, 602, 1),
+(75, 7, 603, 1),
+(76, 8, 600, 1),
+(77, 8, 601, 1),
+(78, 8, 602, 1),
+(79, 8, 603, 1);
 
 -- --------------------------------------------------------
 
@@ -150,9 +210,12 @@ CREATE TABLE `napoje` (
 --
 
 INSERT INTO `napoje` (`idNapoj`, `NazwaNapoju`, `Pojemnosc`, `Cena`) VALUES
-(400, 'Pepsi', 0.3, 5),
-(401, 'Pepsi', 0.5, 7),
-(402, 'Fanta', 0.3, 5);
+(1, 'Pepsi', 1, 10),
+(2, 'Fanta', 0.5, 7),
+(3, 'Fanta', 1, 10),
+(4, 'Sprite', 0.3, 5),
+(5, 'Sprite', 0.5, 7),
+(6, 'Sprite', 1, 10);
 
 -- --------------------------------------------------------
 
@@ -201,13 +264,17 @@ CREATE TABLE `skladniki` (
 --
 
 INSERT INTO `skladniki` (`idSkladniki`, `nazwa`, `Vege`, `Ostrosc`) VALUES
-(0, 'ser', 1, '0'),
-(1, 'sos pomidorowy', 1, '0'),
-(2, 'kiełbasa pepperoni', 0, '1'),
-(3, 'bazylia', 1, '0'),
-(4, 'papryka jalapenio', 1, '2'),
-(5, 'sos chilli', 1, '2'),
-(6, 'oregano', 1, '0');
+(600, 'ser', 1, '0'),
+(601, 'sos pomidorowy', 1, '0'),
+(602, 'kiełbasa pepperoni', 0, '1'),
+(603, 'bazylia', 1, '0'),
+(604, 'sos chilli', 1, '2'),
+(605, 'oregano', 1, '0'),
+(606, 'cebula', 1, '0'),
+(607, 'pieczarki', 1, '0'),
+(608, 'kukurydza', 1, '0'),
+(609, 'pomidory', 1, '0'),
+(610, 'papryka jalapenio', 1, '2');
 
 -- --------------------------------------------------------
 
@@ -281,13 +348,15 @@ ALTER TABLE `kucharz`
 -- Indexes for table `listanapojow`
 --
 ALTER TABLE `listanapojow`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idZamowienie` (`idZamowienie`),
-  ADD KEY `idNapoju` (`idNapoju`);
+  ADD KEY `idNapoj` (`idNapoj`);
 
 --
 -- Indexes for table `listapizz`
 --
 ALTER TABLE `listapizz`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idZamowienie` (`idZamowienie`),
   ADD KEY `idPizzy` (`idPizzy`);
 
@@ -295,20 +364,30 @@ ALTER TABLE `listapizz`
 -- Indexes for table `listaskladnikow`
 --
 ALTER TABLE `listaskladnikow`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idPizza` (`idPizza`),
-  ADD KEY `idSkladnik` (`idSkladnik`);
+  ADD KEY `idSkladnik` (`idSkladnik`),
+  ADD KEY `idPizza_2` (`idPizza`),
+  ADD KEY `idPizza_3` (`idPizza`),
+  ADD KEY `idSkladnik_2` (`idSkladnik`),
+  ADD KEY `idPizza_4` (`idPizza`),
+  ADD KEY `idPizza_5` (`idPizza`,`idSkladnik`);
 
 --
 -- Indexes for table `napoje`
 --
 ALTER TABLE `napoje`
-  ADD PRIMARY KEY (`idNapoj`);
+  ADD PRIMARY KEY (`idNapoj`),
+  ADD KEY `idNapoj` (`idNapoj`),
+  ADD KEY `idNapoj_2` (`idNapoj`),
+  ADD KEY `idNapoj_3` (`idNapoj`);
 
 --
 -- Indexes for table `pizze`
 --
 ALTER TABLE `pizze`
-  ADD PRIMARY KEY (`idPizza`);
+  ADD PRIMARY KEY (`idPizza`),
+  ADD KEY `idPizza` (`idPizza`);
 
 --
 -- Indexes for table `skladniki`
@@ -335,10 +414,30 @@ ALTER TABLE `zamowienie`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `listanapojow`
+--
+ALTER TABLE `listanapojow`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT dla tabeli `listapizz`
+--
+ALTER TABLE `listapizz`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT dla tabeli `listaskladnikow`
+--
+ALTER TABLE `listaskladnikow`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+--
+-- AUTO_INCREMENT dla tabeli `napoje`
+--
+ALTER TABLE `napoje`
+  MODIFY `idNapoj` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT dla tabeli `skladniki`
 --
 ALTER TABLE `skladniki`
-  MODIFY `idSkladniki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=606;
+  MODIFY `idSkladniki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=610;
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownik`
 --
@@ -364,13 +463,6 @@ ALTER TABLE `kelner`
 --
 ALTER TABLE `kucharz`
   ADD CONSTRAINT `kucharz_ibfk_1` FOREIGN KEY (`idUzytkownika`) REFERENCES `uzytkownik` (`idUzytkownik`);
-
---
--- Ograniczenia dla tabeli `listanapojow`
---
-ALTER TABLE `listanapojow`
-  ADD CONSTRAINT `listanapojow_ibfk_1` FOREIGN KEY (`idZamowienie`) REFERENCES `zamowienie` (`idZamowienie`),
-  ADD CONSTRAINT `listanapojow_ibfk_2` FOREIGN KEY (`idNapoju`) REFERENCES `napoje` (`idNapoj`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

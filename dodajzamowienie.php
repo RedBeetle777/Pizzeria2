@@ -44,16 +44,27 @@
 
     $listaPizz = @$polaczenie->query(
             sprintf("SELECT * FROM pizze"));
-    echo "<form><select>";
-    //echo "<option value = '"0""
-    while($rzad = $listaPizz->fetch_assoc()){
-        echo "<option value='".$rzad["idPizza"].
-            "'> ".$rzad["NazwaPizzy"]."</option>";
-    }
 
-    echo "</select></form>";
-?>
-<form action=""
+    ?>
+
+Wybierz Pizze:
+<?php
+echo "<form action='dodajzamowienie.php'><select>";
+while($rzad = $listaPizz->fetch_assoc()){
+        if($rzad['rozmiar'] == "mala") {
+            echo "<option value='" . $rzad["idPizza"] .
+                "'> " . $rzad["NazwaPizzy"] . "</option>";
+
+        }
+    }
+    echo "</select>";
+echo "<input type='radio' name='rozmiar' value='0' checked> mala";
+echo "<input type='radio' name='rozmiar' value='1' > srednia";
+echo "<input type='radio' name='rozmiar' value='2' > duza";
+
+    echo "</form>";
+    ?>
+
 <form action="kelner.php">
     <button type="submit">
         Wróć i porzuć zmiany!
