@@ -79,7 +79,7 @@ echo "</form>";
 ?>
 
 <!--tutaj dodawane sa napoje-->
-
+Wybierz Napoje:
 <?php
 $listaNapoi = @$polaczenie->query(
     sprintf("SELECT * FROM napoje"));
