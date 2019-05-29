@@ -95,10 +95,18 @@ echo "</form>";
 ?>
 
 <br/>
-<?php
+Forma płatności:
+<form action = dobazydanych.php>
+    <input type="radio" name="platnosc" value="gotowka">gotówka
+    <input type="radio" name="platnosc" value="karta">karta
+<br/>
+    <input type = 'submit' value="Dodaj zamowienie!">
+<br/>
 
+<?php
+// wyswietlenie listy zamowien
 echo "Aktualne zamówienie[Pizze]: dlugosc( ". $rozmiarlistyP.") ";
-print_r($_SESSION['listazamowieniaP']);
+//print_r($_SESSION['listazamowieniaP']);
 echo "<br/>";
 
 for($i = 0; $i < $rozmiarlistyP; $i++) {
@@ -108,12 +116,13 @@ for($i = 0; $i < $rozmiarlistyP; $i++) {
     $nazwapizzy = $rezultat->fetch_assoc();
     echo "ID PIZZY :".$_SESSION['listazamowieniaP'][$i].
         " || NAZWA PIZZY: ".$nazwapizzy['NazwaPizzy'].
-        " || ROZMIAR: ".$nazwapizzy['rozmiar'];
+        " || ROZMIAR: ".$nazwapizzy['rozmiar']."  ";
+    echo"<select>";
     echo "<br/>";
 }
 echo "<br/>";
 echo "Aktualne zamówienie[Napoje]: dlugosc( ". $rozmiarlistyN.")";
-print_r($_SESSION['listazamowieniaN']);
+//print_r($_SESSION['listazamowieniaN']);
 echo "<br/>";
 
 for($i = 0; $i < $rozmiarlistyN; $i++) {
@@ -131,4 +140,5 @@ for($i = 0; $i < $rozmiarlistyN; $i++) {
 }
 
 ?>
+</form>
 <br/>
