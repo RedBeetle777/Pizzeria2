@@ -116,8 +116,13 @@ for($i = 0; $i < $rozmiarlistyP; $i++) {
     $nazwapizzy = $rezultat->fetch_assoc();
     echo "ID PIZZY :".$_SESSION['listazamowieniaP'][$i].
         " || NAZWA PIZZY: ".$nazwapizzy['NazwaPizzy'].
-        " || ROZMIAR: ".$nazwapizzy['rozmiar']."  ";
-    echo"<select>";
+        " || ROZMIAR: ".$nazwapizzy['rozmiar']." ||  Ilość: ";
+    echo"<select name = ilPizz".$i.">"; //dodanie wyboru ilosci pizz
+    for($j = 1; $j<10;$j++){
+        echo "<option value= '$j'>".$j."</option>";
+    }
+    echo "</select>";
+//    echo "<"
     echo "<br/>";
 }
 echo "<br/>";
