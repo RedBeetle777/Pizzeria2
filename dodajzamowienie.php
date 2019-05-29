@@ -122,6 +122,7 @@ for($i = 0; $i < $rozmiarlistyP; $i++) {
         echo "<option value= '$j'>".$j."</option>";
     }
     echo "</select>";
+    //echo ""
 //    echo "<"
     echo "<br/>";
 }
@@ -139,8 +140,12 @@ for($i = 0; $i < $rozmiarlistyN; $i++) {
     $nazwanapoju = $rezultat->fetch_assoc();
     echo "ID NAPOJU :".$_SESSION['listazamowieniaN'][$i].
         " || NAZWA NAPOJU: ".$nazwanapoju['NazwaNapoju'].
-        " || POJEMNOSC: ".$nazwanapoju['Pojemnosc'];
-
+        " || POJEMNOSC: ".$nazwanapoju['Pojemnosc']." ||  Ilość: ";
+    echo"<select name = ilNapo".$i.">"; //dodanie wyboru ilosci pizz
+    for($j = 1; $j<10;$j++){
+        echo "<option value= '$j'>".$j."</option>";
+    }
+    echo "</select>";
     echo "<br/>";
 }
 
