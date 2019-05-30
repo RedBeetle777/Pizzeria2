@@ -22,6 +22,7 @@
         unset($_SESSION['listazamowieniaN']);
     if(!isset($_SESSION['listazamowieniaN']))
         $_SESSION['listazamowieniaN'] = array();
+
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">

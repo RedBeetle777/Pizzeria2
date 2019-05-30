@@ -13,8 +13,6 @@
 
     }
 
-//    $rodzaj = $_GET['rodzaj'];
-//    $rozmiar = $_GET['rozmiar'];
 ?>
 <?php
 $rozmiarlistyN = count($_SESSION['listazamowieniaN']);
@@ -148,7 +146,7 @@ for($i = 0; $i < $rozmiarlistyN; $i++) {
     echo "</select>";
     echo "<br/>";
 }
-
+$polaczenie->close();
 ?>
 </form>
 <br/>
