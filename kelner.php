@@ -73,8 +73,13 @@ $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC"
             //wyswietlanie poszczegolnych pizz w zamowieniu
             if ($rezultat2 ->num_rows > 0){
                 while ($rzad2=$rezultat2->fetch_assoc()) {
-                    echo "ID PIZZY:".$rzad2['idPizzy'].
+                    $sql = "SELECT NazwaPizzy, rozmiar, koszt FROM pizze
+                        where idPizza = ".$rzad2['idPizzy'];
+                    $rezultat3 = $polaczenie->query($sql);
+                    $rzad3 = $rezultat3->fetch_assoc();
+                    echo "Nazwa PIZZY:".$rzad3['NazwaPizzy'].
                         " ILOSC: ".$rzad2['Ilosc']."<br/>";
+
 //                    ======= pobranie skladnikow pizzy=====
 //                for ($i = 0; i<$rezultat->num_rows; $i++){
 //
