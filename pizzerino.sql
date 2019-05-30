@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Czas generowania: 28 Maj 2019, 20:04
--- Wersja serwera: 10.1.38-MariaDB-0+deb9u1
--- Wersja PHP: 7.0.33-0+deb9u3
+-- Host: 127.0.0.1
+-- Czas generowania: 30 Maj 2019, 10:42
+-- Wersja serwera: 10.1.38-MariaDB
+-- Wersja PHP: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -61,8 +63,7 @@ CREATE TABLE `kelner` (
 --
 
 INSERT INTO `kelner` (`idKelner`, `idUzytkownika`) VALUES
-(1, 2),
-(2, 3);
+(1, 4);
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,8 @@ CREATE TABLE `kucharz` (
 --
 
 INSERT INTO `kucharz` (`idKucharz`, `idUzytkownika`) VALUES
-(1, 4);
+(1, 2),
+(0, 3);
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,7 @@ CREATE TABLE `listanapojow` (
 --
 
 INSERT INTO `listanapojow` (`id`, `idZamowienie`, `idNapoj`, `ilosc`) VALUES
-(1, 1, 1, 1);
+(11, 61, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -120,7 +122,7 @@ CREATE TABLE `listapizz` (
 --
 
 INSERT INTO `listapizz` (`id`, `idZamowienie`, `idPizzy`, `Ilosc`) VALUES
-(1, 1, 1, 2);
+(19, 61, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -311,7 +313,7 @@ INSERT INTO `uzytkownik` (`idUzytkownik`, `haslo`, `imie`, `nazwisko`, `login`, 
 
 CREATE TABLE `zamowienie` (
   `idZamowienie` int(11) NOT NULL,
-  `CzasZamowienia` varchar(45) DEFAULT NULL,
+  `CzasZamowienia` datetime DEFAULT CURRENT_TIMESTAMP,
   `idKelnera` int(11) NOT NULL,
   `idKucharza` int(11) NOT NULL,
   `KwotaZamowienia` double DEFAULT NULL,
@@ -324,28 +326,39 @@ CREATE TABLE `zamowienie` (
 --
 
 INSERT INTO `zamowienie` (`idZamowienie`, `CzasZamowienia`, `idKelnera`, `idKucharza`, `KwotaZamowienia`, `SposobZaplaty`, `PotwierdzenieZaplaty`) VALUES
-(1, '30', 2, 1, NULL, 'karta', 1);
+(61, '2019-05-30 10:38:46', 1, 2, 74, 'gotowka', NULL);
+
+--
+-- Wyzwalacze `zamowienie`
+--
+DELIMITER $$
+CREATE TRIGGER `usunlistezam` BEFORE DELETE ON `zamowienie` FOR EACH ROW BEGIN
+DELETE FROM listapizz WHERE listapizz.idZamowienie = OLD.idZamowienie;
+DELETE FROM listanapojow WHERE listanapojow.idZamowienie = OLD.idZamowienie;
+END
+$$
+DELIMITER ;
 
 --
 -- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `kelner`
+-- Indeksy dla tabeli `kelner`
 --
 ALTER TABLE `kelner`
   ADD PRIMARY KEY (`idKelner`),
   ADD KEY `idUzytkownika` (`idUzytkownika`);
 
 --
--- Indexes for table `kucharz`
+-- Indeksy dla tabeli `kucharz`
 --
 ALTER TABLE `kucharz`
   ADD PRIMARY KEY (`idKucharz`),
   ADD KEY `idUzytkownika` (`idUzytkownika`);
 
 --
--- Indexes for table `listanapojow`
+-- Indeksy dla tabeli `listanapojow`
 --
 ALTER TABLE `listanapojow`
   ADD PRIMARY KEY (`id`),
@@ -353,7 +366,7 @@ ALTER TABLE `listanapojow`
   ADD KEY `idNapoj` (`idNapoj`);
 
 --
--- Indexes for table `listapizz`
+-- Indeksy dla tabeli `listapizz`
 --
 ALTER TABLE `listapizz`
   ADD PRIMARY KEY (`id`),
@@ -361,7 +374,7 @@ ALTER TABLE `listapizz`
   ADD KEY `idPizzy` (`idPizzy`);
 
 --
--- Indexes for table `listaskladnikow`
+-- Indeksy dla tabeli `listaskladnikow`
 --
 ALTER TABLE `listaskladnikow`
   ADD PRIMARY KEY (`id`),
@@ -374,7 +387,7 @@ ALTER TABLE `listaskladnikow`
   ADD KEY `idPizza_5` (`idPizza`,`idSkladnik`);
 
 --
--- Indexes for table `napoje`
+-- Indeksy dla tabeli `napoje`
 --
 ALTER TABLE `napoje`
   ADD PRIMARY KEY (`idNapoj`),
@@ -383,26 +396,26 @@ ALTER TABLE `napoje`
   ADD KEY `idNapoj_3` (`idNapoj`);
 
 --
--- Indexes for table `pizze`
+-- Indeksy dla tabeli `pizze`
 --
 ALTER TABLE `pizze`
   ADD PRIMARY KEY (`idPizza`),
   ADD KEY `idPizza` (`idPizza`);
 
 --
--- Indexes for table `skladniki`
+-- Indeksy dla tabeli `skladniki`
 --
 ALTER TABLE `skladniki`
   ADD PRIMARY KEY (`idSkladniki`);
 
 --
--- Indexes for table `uzytkownik`
+-- Indeksy dla tabeli `uzytkownik`
 --
 ALTER TABLE `uzytkownik`
   ADD PRIMARY KEY (`idUzytkownik`);
 
 --
--- Indexes for table `zamowienie`
+-- Indeksy dla tabeli `zamowienie`
 --
 ALTER TABLE `zamowienie`
   ADD PRIMARY KEY (`idZamowienie`),
@@ -417,37 +430,44 @@ ALTER TABLE `zamowienie`
 -- AUTO_INCREMENT dla tabeli `listanapojow`
 --
 ALTER TABLE `listanapojow`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT dla tabeli `listapizz`
 --
 ALTER TABLE `listapizz`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
 --
 -- AUTO_INCREMENT dla tabeli `listaskladnikow`
 --
 ALTER TABLE `listaskladnikow`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
 --
 -- AUTO_INCREMENT dla tabeli `napoje`
 --
 ALTER TABLE `napoje`
   MODIFY `idNapoj` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT dla tabeli `skladniki`
 --
 ALTER TABLE `skladniki`
-  MODIFY `idSkladniki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=610;
+  MODIFY `idSkladniki` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=611;
+
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownik`
 --
 ALTER TABLE `uzytkownik`
   MODIFY `idUzytkownik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT dla tabeli `zamowienie`
 --
 ALTER TABLE `zamowienie`
-  MODIFY `idZamowienie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idZamowienie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
 --
 -- Ograniczenia dla zrzutów tabel
 --
@@ -463,6 +483,7 @@ ALTER TABLE `kelner`
 --
 ALTER TABLE `kucharz`
   ADD CONSTRAINT `kucharz_ibfk_1` FOREIGN KEY (`idUzytkownika`) REFERENCES `uzytkownik` (`idUzytkownik`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
