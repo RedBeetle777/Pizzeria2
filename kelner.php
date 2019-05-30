@@ -107,3 +107,4 @@ $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC"
 
 </body>
 </html>
+<!--https://www.w3schools.com/php/php_mysql_select.asp-->
