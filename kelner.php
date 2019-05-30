@@ -12,6 +12,13 @@
 		exit();
 		
 	}
+    require_once "connect.php";
+    $polaczenie = @new mysqli($host, $db_user, $db_password, $db_name);
+
+    if ($polaczenie->connect_errno!=0)
+    {
+        echo "Error: ".$polaczenie->connect_errno;
+    }
 //	Tworzenie(badz reset) listy zamowienia pizz
 	if(isset($_SESSION['listazamowieniaP']))
 	    unset($_SESSION['listazamowieniaP']);
@@ -37,7 +44,6 @@
 <?php
 
 	echo "<p>Witaj ".$_SESSION['imie'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p>';
-	echo "Jesteś:".$_SESSION['stanowisko'];
 
 ?>
 <form action="dodajzamowienie.php">
@@ -47,8 +53,52 @@
     </button>
 
 </form>
+<input type="button" value="Kliknij tutaj" onclick="window.alert('sssss')">
+<br/><br/>
+======Zamowienia======<br/>
 
-<input type="button" value="Kliknij tutaj" onclick="window.alert('')">
+<?php
+$listazamowienID = array();
+$sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC";
+    $rezultat = $polaczenie->query($sql);
+    if($rezultat->num_rows > 0){
+        while($rzad = $rezultat->fetch_assoc()){
+            //wyswietlanie dodanych zamowien
+            echo"=================================<br/>";
+            echo "|ID zamowienia:".$rzad['idZamowienie'].
+                ", czas złożenia zamowienia: ".$rzad['CzasZamowienia']."<br/>";
+            $sql = "SELECT idPizzy, Ilosc FROM listapizz 
+                where idZamowienie = ".$rzad['idZamowienie'];
+            $rezultat2 = $polaczenie->query($sql);
+            //wyswietlanie poszczegolnych pizz w zamowieniu
+            if ($rezultat2 ->num_rows > 0){
+                while ($rzad2=$rezultat2->fetch_assoc()) {
+                    echo "ID PIZZY:".$rzad2['idPizzy'].
+                        " ILOSC: ".$rzad2['Ilosc']."<br/>";
+//                    ======= pobranie skladnikow pizzy=====
+//                for ($i = 0; i<$rezultat->num_rows; $i++){
+//
+//                    ======= pobranie skladnikow pizzy=====
+//                    $sql = "SELECT idSkladnik FROM listaskladnikow
+//                        where idPizza =".$rezultat2['idPizzy'];
+//                    $listaskladnikow = array();
+//                    $rezultat3 = $polaczenie->query($sql);
+//                    //zorbienie listy skladnikow do pizzy
+//                    if ($rezultat3->num_rows > 0){
+//                        while($rzad2 = $rezultat3->fetch_assoc()){
+//                            array_push($listaskladnikow, )
+//
+//                        }
+//                    }
+//                }
+//                    ======= pobranie skladnikow pizzy=====
+                }
+            }else echo "brak zamowionych pizz w tym zamowieniu!<br/>";
+        }
+
+    }else echo "brak zamowien"
+
+?>
 
 </body>
 </html>
