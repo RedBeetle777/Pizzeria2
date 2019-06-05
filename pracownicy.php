@@ -27,6 +27,12 @@ if ($polaczenie->connect_errno!=0)
         POWRÓT
     </button>
 
+</form><form action="dodajpracownika.php">
+
+    <button type="submit">
+        DODAJ PRACOWNIKA
+    </button>
+
 </form>
 Lista pracowników:
 <br/><br/>
