@@ -29,6 +29,22 @@ if ($polaczenie->connect_errno!=0)
 
 </form>
 Lista pracowników:
+<br/><br/>
 <?php
+$sql = "SELECT * FROM uzytkownik order by uzytkownik.stanowisko";
+$rezultat = $polaczenie->query($sql);
+if($rezultat->num_rows > 0){
+    while($rzad = $rezultat->fetch_assoc()){
+        echo "IMIĘ: ".$rzad['imie']." NAZWISKO: ".$rzad['nazwisko'].
+            " NR. PERSONELU: ".$rzad['nr_personelu']." STANOWISKO: ".
+            $rzad['stanowisko'];
+        echo "<form action='pracownik.php?'>".
+            "<input type='hidden' name='id' value='".$rzad['idUzytkownik']."'>".
+            "<input type='submit' value='EDYTUJ'>".
+            "</form><br/>";
+//".$rzad['idUzytkownik'].
+//            "' value='EDYTUJ
+    }
 
+}
 ?>
