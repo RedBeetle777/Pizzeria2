@@ -29,6 +29,20 @@
 	echo "Jesteś:".$_SESSION['stanowisko'];
 
 ?>
+<form action="menu.php">
+
+    <button type="submit">
+        EDYTUJ MENU
+    </button>
+
+</form>
+<form action="pracownicy.php">
+
+    <button type="submit">
+        PRACOWNICY
+    </button>
+
+</form>
 
 </body>
 </html>
