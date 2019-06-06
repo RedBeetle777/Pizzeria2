@@ -104,10 +104,10 @@ Forma płatności:
 <?php
 // wyswietlenie listy zamowien
 echo "Aktualne zamówienie[Pizze]: dlugosc( ". $rozmiarlistyP.") ";
-//print_r($_SESSION['listazamowieniaP']);
 echo "<br/>";
 
 for($i = 0; $i < $rozmiarlistyP; $i++) {
+    echo "_________________________________________________________<br/>";
     $rezultat = @$polaczenie->query(
         sprintf("SELECT * FROM pizze WHERE idPizza='%s'",
             mysqli_real_escape_string($polaczenie,$_SESSION['listazamowieniaP'][$i])));
@@ -126,12 +126,10 @@ for($i = 0; $i < $rozmiarlistyP; $i++) {
 }
 echo "<br/>";
 echo "Aktualne zamówienie[Napoje]: dlugosc( ". $rozmiarlistyN.")";
-//print_r($_SESSION['listazamowieniaN']);
 echo "<br/>";
 
 for($i = 0; $i < $rozmiarlistyN; $i++) {
-    echo$_SESSION['listazamowieniaN'][$i];
-    echo "<br/>";
+    echo "_________________________________________________________<br/>";
     $rezultat = @$polaczenie->query(
         sprintf("SELECT * FROM napoje WHERE idNapoj='%s'",
             mysqli_real_escape_string($polaczenie,$_SESSION['listazamowieniaN'][$i])));

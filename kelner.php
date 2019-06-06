@@ -58,15 +58,18 @@
 ======Zamowienia======<br/>
 
 <?php
+
 $listazamowienID = array();
 $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC";
     $rezultat = $polaczenie->query($sql);
     if($rezultat->num_rows > 0){
         while($rzad = $rezultat->fetch_assoc()){
+            $do_zaplaty = 0;
             //wyswietlanie dodanych zamowien
             echo"=================================<br/>";
             echo "|ID zamowienia:".$rzad['idZamowienie'].
-                ", czas złożenia zamowienia: ".$rzad['CzasZamowienia']."<br/>";
+                ", czas złożenia zamowienia: ".$rzad['CzasZamowienia']."<br/><br/>";
+            echo "ZAMOWIONE PIZZE:<br/>";
             $sql = "SELECT idPizzy, Ilosc FROM listapizz 
                 where idZamowienie = ".$rzad['idZamowienie'];
             $rezultat2 = $polaczenie->query($sql);
@@ -77,28 +80,34 @@ $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC"
                         where idPizza = ".$rzad2['idPizzy'];
                     $rezultat3 = $polaczenie->query($sql);
                     $rzad3 = $rezultat3->fetch_assoc();
-                    echo "Nazwa PIZZY:".$rzad3['NazwaPizzy'].
-                        " ILOSC: ".$rzad2['Ilosc']."<br/>";
 
-//                    ======= pobranie skladnikow pizzy=====
-//                for ($i = 0; i<$rezultat->num_rows; $i++){
-//
-//                    ======= pobranie skladnikow pizzy=====
-//                    $sql = "SELECT idSkladnik FROM listaskladnikow
-//                        where idPizza =".$rezultat2['idPizzy'];
-//                    $listaskladnikow = array();
-//                    $rezultat3 = $polaczenie->query($sql);
-//                    //zorbienie listy skladnikow do pizzy
-//                    if ($rezultat3->num_rows > 0){
-//                        while($rzad2 = $rezultat3->fetch_assoc()){
-//                            array_push($listaskladnikow, )
-//
-//                        }
-//                    }
-//                }
-//                    ======= pobranie skladnikow pizzy=====
+                    echo "NAZWA PIZZY:".$rzad3['NazwaPizzy']." ".
+                        $rzad3['rozmiar'].
+                        "| ILOSC: ".$rzad2['Ilosc']."| CENA: ".$rzad3['koszt'].
+                        "ZL<br/>";
+                    $do_zaplaty += $rzad2['Ilosc']*$rzad3['koszt'];
                 }
-            }else echo "brak zamowionych pizz w tym zamowieniu!<br/>";
+            }else echo "Brak zamowionych pizz w tym zamowieniu!<br/>";
+            echo "<br/>ZAMOWIONE NAPOJE:<br/>";
+            $sql = "SELECT idNapoj, ilosc FROM listanapojow 
+                where idZamowienie = ".$rzad['idZamowienie'];
+            $rezultat2 = $polaczenie->query($sql);
+            //wyswietlanie poszczegolnych napojow w zamowieniu
+            if ($rezultat2 ->num_rows > 0){
+                while ($rzad2=$rezultat2->fetch_assoc()) {
+                    $sql = "SELECT NazwaNapoju, Pojemnosc, Cena FROM napoje
+                        where idNapoj = ".$rzad2['idNapoj'];
+                    $rezultat3 = $polaczenie->query($sql);
+                    $rzad3 = $rezultat3->fetch_assoc();
+
+                    echo "NAZWA NAPOJU:".$rzad3['NazwaNapoju']." ".
+                        $rzad3['Pojemnosc']."L ".
+                        "| ILOSC: ".$rzad2['ilosc']."| CENA: ".$rzad3['Cena'].
+                        "ZL<br/>";
+                    $do_zaplaty += $rzad2['ilosc']*$rzad3['Cena'];
+                }
+            }else echo "Brak zamowionych napojow w tym zamowieniu!<br/>";
+            echo "KWOTA DO ZAPLATY: ".$do_zaplaty." ZL<br/>";
         }
 
     }else echo "brak zamowien"
@@ -108,3 +117,21 @@ $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC"
 </body>
 </html>
 <!--https://www.w3schools.com/php/php_mysql_select.asp-->
+
+<!--//                    ======= pobranie skladnikow pizzy=====-->
+<!--//                for ($i = 0; i<$rezultat->num_rows; $i++){-->
+<!--//-->
+<!--//                    ======= pobranie skladnikow pizzy=====-->
+<!--//                    $sql = "SELECT idSkladnik FROM listaskladnikow-->
+<!--//                        where idPizza =".$rezultat2['idPizzy'];-->
+<!--//                    $listaskladnikow = array();-->
+<!--//                    $rezultat3 = $polaczenie->query($sql);-->
+<!--//                    //zorbienie listy skladnikow do pizzy-->
+<!--//                    if ($rezultat3->num_rows > 0){-->
+<!--//                        while($rzad2 = $rezultat3->fetch_assoc()){-->
+<!--//                            array_push($listaskladnikow, )-->
+<!--//-->
+<!--//                        }-->
+<!--//                    }-->
+<!--//                }-->
+<!--//                    ======= pobranie skladnikow pizzy=====-->
