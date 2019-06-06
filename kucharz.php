@@ -19,6 +19,13 @@ if ($polaczenie->connect_errno!=0)
 {
     echo "Error: ".$polaczenie->connect_errno;
 }
+if(isset($_GET['usunid']) && (strlen($_GET['usunid'])>0)){
+    $sql = "DELETE from zamowienie where idZamowienie =".$_GET['usunid'];
+    if($polaczenie->query($sql) === TRUE){
+        header('Location: kucharz.php');
+    }
+
+}
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -70,6 +77,10 @@ if($rezultat->num_rows > 0){
                 //echo $listaskladnikow."<br/>";
             }
         }else echo "Brak zamowionych pizz w tym zamowieniu!<br/>";
+        echo "<form action='kucharz.php'>".
+            "<input type='hidden' name='usunid' value=".$rzad['idZamowienie'].">".
+            "<input type='submit' value='ZAMOWIENIE ZREALIZOWANE'>".
+            "</form><br/>";
     }
 
 }else echo "brak zamowien"

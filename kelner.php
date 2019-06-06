@@ -110,7 +110,7 @@ $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC"
                         $rzad3['rozmiar'].
                         "| ILOSC: ".$rzad2['Ilosc']."| CENA: ".$rzad3['koszt'].
                         "ZL<br/>";
-                        echo $listaskladnikow."<br/>";
+                        //echo $listaskladnikow."<br/>";
                     $do_zaplaty += $rzad2['Ilosc']*$rzad3['koszt'];
                 }
             }else echo "Brak zamowionych pizz w tym zamowieniu!<br/>";
