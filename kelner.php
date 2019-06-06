@@ -88,14 +88,13 @@ $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC"
                         where idPizza = ".$rzad2['idPizzy'];
                     $rezultat4 = $polaczenie->query($sql);
                         if($rezultat4->num_rows>0){
+                            $listaskladnikow = "";
                             while ($rzad4 = $rezultat4->fetch_assoc()){
                                 $sql = "SELECT * from skladniki
                                     where idSkladniki = ".$rzad4['idSkladnik'];
                                 $rezultat5 = $polaczenie->query($sql);
                                 if ($rezultat5->num_rows > 0){
                                     $index = 0;
-                                    $listaskladnikow = "";
-
                                     while ($rzad5 = $rezultat5->fetch_assoc()){
                                         $index ++;
                                         $listaskladnikow .= "Skladnik ".$index.".".
@@ -104,16 +103,14 @@ $sql = "SELECT * FROM zamowienie  \n"."ORDER BY zamowienie.CzasZamowienia  DESC"
                                             "| Ostrosc ".$rzad5['Ostrosc']."
                                             ";
                                     }
-
                                 }
-
                             }
-
                         }
                     echo "NAZWA PIZZY:".$rzad3['NazwaPizzy']." ".
                         $rzad3['rozmiar'].
                         "| ILOSC: ".$rzad2['Ilosc']."| CENA: ".$rzad3['koszt'].
                         "ZL<br/>";
+                        echo $listaskladnikow."<br/>";
                     $do_zaplaty += $rzad2['Ilosc']*$rzad3['koszt'];
                 }
             }else echo "Brak zamowionych pizz w tym zamowieniu!<br/>";
