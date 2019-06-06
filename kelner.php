@@ -53,7 +53,7 @@
     </button>
 
 </form>
-<input type="button" value="Kliknij tutaj" onclick="window.alert('sssss')">
+<input type="button" value="Kliknij tutaj" onclick="window.alert('lista skladniukow')">
 <br/><br/>
 ======Zamowienia======<br/>
 
