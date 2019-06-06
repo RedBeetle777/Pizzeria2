@@ -35,15 +35,29 @@ if(isset($_GET['nazwisko'])){
         echo "nie podano nazwiska!";
     }else array_push($dane, $_GET['nazwisko']);
 }else $blad = true;
+//sprawdzenie stanowiska
+if(isset($_GET['stanowisko'])){
+    if (strlen($_GET['stanowisko']) == 0){
+        $blad = true;
+        echo "nie podano stanowiska!";
+    }else array_push($dane, $_GET['stanowisko']);
+}else $blad = true;
 //jesli nie popelniono bledu
 if (!$blad){
     array_push($dane, substr($_GET['imie'],0,strlen($_GET['imie'])).
         substr($_GET['nazwisko'],0,strlen($_GET['nazwisko'])));
 
-    echo "login: ".$dane[2]." haslo: ".rand(1000,9999);
-$sql = "INSERT INTO `uzytkownik` (`idUzytkownik`, `haslo`,
- `imie`, `nazwisko`, `login`, `stanowisko`)
-  VALUES (NULL, '', '', '', '', 'Inne')";
+    array_push($dane, rand(1000,9999));
+    //echo "login: ".$dane[2]." haslo: ".rand(1000,9999);
+    $sql = "INSERT INTO `uzytkownik` (`idUzytkownik`, `haslo`,
+    `imie`, `nazwisko`, `login`, `stanowisko`)
+    VALUES (NULL, '$dane[4]', '$dane[0]','$dane[1]',
+    '$dane[3]','$dane[2]')";
+    if($polaczenie->query($sql) === TRUE){
+        echo "dodano nowego pracownika";
+        header('Location: dodajpracownika.php');
+    }
+
 }
 ?>
 
